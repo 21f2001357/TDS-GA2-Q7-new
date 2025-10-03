@@ -1,0 +1,56 @@
+name: Email Step Workflow
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 21f2001357@ds.study.iitm.ac.in
+        run: echo "Hello, world!"
+You
+6:54 AM
+21f2001357@ds.study.iitm.ac.in
+Abdullah BinMohammed
+7:18 AM
+name: Cache Dependencies
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  cache-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Cache Python dependencies
+      uses: actions/cache@v4
+      id: cache-deps
+      with:
+        path: ~/.cache/pip
+        key: cache-acfa9d2-${{ hashFiles('requirements.txt') }}
+        
+    - name: prime-cache-acfa9d2
+      run: |
+        echo "Starting prime-cache-acfa9d2 step"
+        
+        # Test with a simple package that definitely exists
+        if [ "${{ steps.cache-deps.outputs.cache-hit }}" == 'true' ]; then
+          echo "✅ SUCCESS: Cache HIT"
+        else
+          echo "❌ Cache MISS - Installing requests package..."
+          pip install requests
+          echo "✅ SUCCESS: Package installed"
+        fi
+        
+        echo "✅ prime-cache-acfa9d2 step completed"
